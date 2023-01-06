@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://github.com/TheCoderDream/ngx-mic-recorder/blob/main/projects/ngx-mic-recorder/misc/documentation-assets/ngx-voice-recording.gif?raw=true" alt="Angular Microphone Recorder">
   <br>
-  <h1>vue-voice-recorder</h1>
+  <h1>vue-voice-recording</h1>
   <br>
   <a href="https://www.npmjs.org/package/ngx-toastr">
     <img src="https://badge.fury.io/js/vue-voice-recording.svg" alt="npm">
@@ -10,7 +10,6 @@
   <br>
 </div>
 
-DEMO: 
 
 ## Features
 
@@ -21,9 +20,9 @@ DEMO:
 
 ## Dependencies
 
-| vue-voice-recorder | Vue    | lamejstmp |
-|--------------------|--------|-----------|
-| 1.0.0              | => 3.x | ^1.0.1    |
+| vue-voice-recording | Vue    | lamejstmp |
+|---------------------|--------|-----------|
+| 1.0.0               | => 3.x | ^1.0.1    |
 
 
 ## Install

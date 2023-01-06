@@ -20,7 +20,7 @@ export interface RecorderEvents {
     afterStopRecording: (data: Blob) => void;
     afterPauseRecording: () => void;
     afterResumeRecording: () => void;
-    getAsMp3: (data: Blob) => void;
+    getAsMp3: (value: { data: Blob, url: string}) => void;
 }
 
 const toHHMMSS = (seconds: number): string =>  {
@@ -96,7 +96,7 @@ export const useRecorder: (options?: Partial<RecorderEvents>) => RecorderControl
                     mediaRecorder.value = null;
                     if (afterStopRecording) afterStopRecording(event.data);
                     if (getAsMp3) {
-                        getMp3().then((data) => ({data, url: URL.createObjectURL(data)}));
+                        getMp3().then((data) => getAsMp3({data, url: URL.createObjectURL(data)}));
                     }
                 });
                 AudioContext.startAnalyze(stream);

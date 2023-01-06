@@ -1,6 +1,6 @@
 {
   "name": "vue-voice-recording",
-  "version": "0.0.4",
+  "version": "1.0.1",
   "scripts": {
     "build": "rimraf dist && vue-tsc && vite build",
     "docs:dev": "vitepress dev docs",
@@ -36,8 +36,8 @@
     },
     "./dist/style.css": "./dist/style.css"
   },
-  "repository": "thecoderdream/ngx-mic-recorder",
-  "homepage": "https://github.com/TheCoderDream/ngx-mic-recorder",
+  "repository": "TheCoderDream/vue-voice-recording",
+  "homepage": "https://github.com/TheCoderDream/vue-voice-recording",
   "license": "MIT",
   "description": "Microphone recorder for Vue",
   "keywords": [

@@ -13,7 +13,7 @@
   >
     <div class="vue-voice-recorder">
       <div class="vue-voice-recorder__container">
-        <div class="vue-voice-recorder__start-and-stop" @click="toggleStartAndStop">
+      <div class="vue-voice-recorder__start-and-stop" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @click="handleClick">
           <div class="vue-voice-recorder__state">
             <span v-if="isRecording" class="vue-voice-recorder__stop"></span>
             <svg v-if="!isRecording" class="vue-voice-recorder__start"
@@ -43,12 +43,20 @@
 
 <script lang="ts" setup>
 import { useRecorder } from '../composables';
-import { defineEmits, onMounted, PropType, ref } from 'vue';
+import { defineEmits, onMounted, onBeforeUnmount, PropType, ref } from 'vue';
 import { AudioVisualizationType, AudioVisualizationOptions, AudioVisualizer } from '../utils';
 
 const canvas = ref<HTMLCanvasElement>();
 
 const props = defineProps({
+  recordingStopDelay: {
+    type: Number as PropType<number>,
+    default: 500,
+  },
+  pressAndHoldToRecord: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
   showVisualization: {
     type: Boolean as PropType<boolean>,
     default: true,
@@ -76,8 +84,45 @@ const emits = defineEmits([
     'afterStopRecording',
     'afterPauseRecording',
     'afterResumeRecording',
-    'getAsMp3'
+    'getAsMp3',
+    'onArrowKeyLeft',
+    'onArrowKeyRight'
 ]);
+
+let timeout; // Define a variable to hold the timeout reference
+
+const delayedStopRecording = () => {
+  timeout = setTimeout(() => {
+    stopRecording();
+  }, props.recordingStopDelay);
+};
+
+const immediateStop = () => {
+  clearTimeout(timeout);
+  stopRecording();
+};
+
+const handleClick = () => {
+  console.log("In click");
+  if(props.pressAndHoldToRecord)
+    return;
+
+  toggleStartAndStop();
+}
+
+const handleMouseDown = () => {
+  if(!props.pressAndHoldToRecord)
+    return;
+
+  startRecording();
+};
+
+const handleMouseUp = () => {
+  if(!props.pressAndHoldToRecord)
+    return;
+  
+  delayedStopRecording();
+};
 
 const {
   isRecording,
@@ -95,8 +140,9 @@ const {
   afterStopRecording: (blob) => emits('afterStartRecording', blob),
   afterPauseRecording: () => emits('afterPauseRecording'),
   afterResumeRecording: () => emits('afterResumeRecording'),
-  getAsMp3: () => emits('getAsMp3'),
+  getAsMp3: (value) => emits('getAsMp3', value),
 });
+
 
 onMounted(() => {
   if (props.showVisualization && canvas.value) {
@@ -106,6 +152,10 @@ onMounted(() => {
     })
   }
 })
+
+onBeforeUnmount(() => {
+});
+
 </script>
 
 <style lang="scss">

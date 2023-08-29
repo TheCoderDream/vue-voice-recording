@@ -1,6 +1,6 @@
 {
   "name": "vue-voice-recording",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "scripts": {
     "build": "rimraf dist && vue-tsc && vite build",
     "docs:dev": "vitepress dev docs",
@@ -36,10 +36,10 @@
     },
     "./dist/style.css": "./dist/style.css"
   },
-  "repository": "TheCoderDream/vue-voice-recording",
-  "homepage": "https://github.com/TheCoderDream/vue-voice-recording",
+  "repository": "DiAvisoo/vue-voice-recording",
+  "homepage": "https://github.com/DiAvisoo/vue-voice-recording",
   "license": "MIT",
-  "description": "Microphone recorder for Vue",
+  "description": "Microphone recorder for Vue3",
   "keywords": [
     "vue",
     "vuejs",

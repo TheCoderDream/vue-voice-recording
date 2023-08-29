@@ -18,17 +18,25 @@
 - Fully customizable and configurable.
 - Fully documented.
 
+## Changes
+
+1.1.0
+* Removed the deprecated ScriptProcessorNode and replaced it with AudioWorklet
+* Added option to press-and-hold to record
+* Added delay after stop record has been called (since I noticed myself very easily letting go of the rec button too soon)
+
 ## Dependencies
 
 | vue-voice-recording | Vue    | lamejstmp |
 |---------------------|--------|-----------|
+| 1.1.0               | => 3.x | inline    |
 | 1.0.0               | => 3.x | ^1.0.1    |
 
 
 ## Install
 
 ```bash
-npm install vue-voice-recorder --save
+npm install https://github.com/DiAvisoo/vue-voice-recording
 ```
 
 ## Setup
@@ -91,6 +99,9 @@ const {
         strokeColor: '#212121',
         backgroundColor: 'white',
     }"
+  :recordingStopDelay="500"
+  :pressAndHoldToRecord="false"
+
 ></VueVoiceRecording>
 ```
 
@@ -101,6 +112,9 @@ const {
 | showVisualization    | number                                                | true                                | Whether to show the visualization     |
 | visualizationType    | ``SineWave``, ``FrequencyBars``, ``FrequencyCircles`` | SineWave                            | Audio Recording visualization type    |
 | visualizationOptions | object                                                | [see below](#visualization-options) | Audio Recording visualization options |
+| recordingStopDelay   | number                                                | 500                                 | Milliseconds to keep recording after
+|                      |                                                       |                                     | stop has been called                  |
+| pressAndHoldToRecord | boolean                                               | false                               | Keep recording while pressing rec     |
 
 ##### Visualization options
 
@@ -142,7 +156,7 @@ const defaultVisualizationOptions = {
 >
     <div class="vue-voice-recorder">
         <div class="vue-voice-recorder__container">
-            <div class="vue-voice-recorder__start-and-stop" @click="toggleStartAndStop">
+            <div class="vue-voice-recorder__start-and-stop" @mousedown="handleMouseDown" @mouseup="delayedStopRecording" @click="handleClick">
                 <div class="vue-voice-recorder__state">
                     <span v-if="isRecording" class="vue-voice-recorder__stop"></span>
                     <svg v-if="!isRecording" class="vue-voice-recorder__start"

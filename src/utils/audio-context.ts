@@ -4,30 +4,30 @@ declare global {
   }
 }
 
-const audioCtx = new (window.AudioContext || window['webkitAudioContext'])();
+const audioCtx = new (window.AudioContext || window['webkitAudioContext'] as typeof AudioContext)();
 let analyser = audioCtx.createAnalyser();
 
-export const AudioContext = {
+export const AudioContextUtil = {
   getAudioContext(): AudioContext {
     return audioCtx;
   },
 
   startAnalyze(stream: MediaStream): void {
-    const audioCtx = AudioContext.getAudioContext();
+    const audioCtx = AudioContextUtil.getAudioContext();
     audioCtx.resume().then(() => {
-      const analyser = AudioContext.getAnalyser();
+      const analyser = AudioContextUtil.getAnalyser();
       const sourceNode = audioCtx.createMediaStreamSource(stream);
       sourceNode.connect(analyser);
     });
   },
 
   pauseAnalyze(): void {
-    const audioCtx = AudioContext.getAudioContext();
+    const audioCtx = AudioContextUtil.getAudioContext();
     void audioCtx.suspend();
   },
 
   resumeAnalyze(): void {
-    const audioCtx = AudioContext.getAudioContext();
+    const audioCtx = AudioContextUtil.getAudioContext();
     void audioCtx.resume();
   },
 

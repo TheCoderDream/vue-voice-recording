@@ -1,4 +1,4 @@
-import { AudioContext } from './audio-context';
+import { AudioContextUtil } from './audio-context';
 
 let drawVisual;
 
@@ -30,7 +30,7 @@ export const AudioVisualizer = {
     height,
   }: AudioVisualizationOptions): void {
     const canvasCtx = canvas.getContext('2d') as CanvasRenderingContext2D;
-    let analyser = AudioContext.getAnalyser();
+    let analyser = AudioContextUtil.getAnalyser();
 
     const bufferLength = analyser.fftSize;
     const dataArray = new Uint8Array(bufferLength);
@@ -40,7 +40,7 @@ export const AudioVisualizer = {
     function draw(): void {
       drawVisual = requestAnimationFrame(draw);
 
-      analyser = AudioContext.getAnalyser();
+      analyser = AudioContextUtil.getAnalyser();
 
       analyser.getByteTimeDomainData(dataArray);
 
@@ -83,7 +83,7 @@ export const AudioVisualizer = {
     height,
   }: AudioVisualizationOptions): void {
     const canvasCtx = canvas.getContext('2d') as CanvasRenderingContext2D;
-    let analyser = AudioContext.getAnalyser();
+    let analyser = AudioContextUtil.getAnalyser();
     analyser.fftSize = 256;
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
@@ -93,7 +93,7 @@ export const AudioVisualizer = {
     const draw = () => {
       drawVisual = requestAnimationFrame(draw);
 
-      analyser = AudioContext.getAnalyser();
+      analyser = AudioContextUtil.getAnalyser();
       analyser.getByteFrequencyData(dataArray);
 
       canvasCtx.fillStyle = backgroundColor;
@@ -126,7 +126,7 @@ export const AudioVisualizer = {
     height,
   }: AudioVisualizationOptions): void {
     const canvasCtx = canvas.getContext('2d') as CanvasRenderingContext2D;
-    let analyser = AudioContext.getAnalyser();
+    let analyser = AudioContextUtil.getAnalyser();
     analyser.fftSize = 32;
     const bufferLength = analyser.frequencyBinCount;
 
@@ -135,7 +135,7 @@ export const AudioVisualizer = {
 
     const draw = () => {
       drawVisual = requestAnimationFrame(draw);
-      analyser = AudioContext.getAnalyser();
+      analyser = AudioContextUtil.getAnalyser();
       analyser.getByteFrequencyData(dataArray);
       const reductionAmount = 3;
       const reducedDataArray = new Uint8Array(bufferLength / reductionAmount);
